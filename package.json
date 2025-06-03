@@ -15,6 +15,7 @@
     "sandbox:delete": "npx ampx sandbox delete"
   },
   "dependencies": {
+    "@aws-amplify/ui": "^6.10.3",
     "@aws-amplify/ui-react": "^6.11.2",
     "@aws-sdk/client-cognito-identity-provider": "^3.821.0",
     "aws-amplify": "^6.15.0",
