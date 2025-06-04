@@ -4,8 +4,8 @@ import { Amplify } from "aws-amplify";
 import { Authenticator, View } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import config from "@/amplify_outputs.json";
-import { containerProps, theme } from "@/styles/theme";
-import { ThemeStyle } from "@aws-amplify/ui-react/server";
+// import { containerProps, theme } from "@/styles/theme";
+// import { ThemeStyle } from "@aws-amplify/ui-react/server";
 import { I18n } from "@aws-amplify/core";
 import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
 
@@ -24,7 +24,6 @@ I18n.putVocabulariesForLanguage("ru", {
   "Preferred Username": "Желаемое имя пользователя",
   "Enter your Preferred Username": "Введите жлаемое имя пользователя",
 
-  // Валидация пароля
   "Password must have at least 8 characters":
     "Пароль должен содержать минимум 8 символов",
   "Password must have lower case letters":
@@ -43,7 +42,7 @@ I18n.setLanguage("ru");
 
 export function AppAuth({ children }: { children: React.ReactNode }) {
   return (
-    <View {...containerProps()}>
+    <View>
       <div className="text-center mb-6">
         <h2 className="text-xl font-bold">Добро пожаловать / Welcome</h2>
         <p className="text-sm text-[var(--color-text-light)] mt-2">
@@ -75,7 +74,6 @@ export function AppAuth({ children }: { children: React.ReactNode }) {
       >
         {children}
       </Authenticator>
-      <ThemeStyle theme={theme} />
       <div className="flex justify-center mb-4">
         <ThemeToggle />
       </div>

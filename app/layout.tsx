@@ -1,7 +1,7 @@
 import { AppAuth } from "@/components/App/AppAuth";
 import AppLayout from "@/components/App/AppLayout";
 import { AppProvider } from "@/providers/app.provider";
-import "./globals.css";
+import "./styles/globals.css";
 
 export default function RootLayout({
   children,

@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 
 export const inter = Inter({
-  subsets: ["latin"],
+  subsets: ["latin", "cyrillic"],
   variable: "--font-inter",
 });
