@@ -16,6 +16,6 @@ export const locales: Locale[] = ["en", "ru"];
 export const defaultLocale: Locale = "en";
 
 export const localeNames = {
-  en: "English",
-  ru: "Русский",
+  en: "En",
+  ru: "Ru",
 };

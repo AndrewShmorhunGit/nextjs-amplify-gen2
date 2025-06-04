@@ -6,7 +6,7 @@ import { Authenticator, View } from "@aws-amplify/ui-react";
 import "@aws-amplify/ui-react/styles.css";
 import config from "@/amplify_outputs.json";
 import { I18n } from "@aws-amplify/core";
-import { ThemeToggle } from "../ThemeToggle/ThemeToggle";
+import { ThemeSwitcher } from "../ThemeSwitcher/ThemeSwitcher";
 import { useLocale } from "@/providers/locale.provider";
 
 Amplify.configure(config, { ssr: true });
@@ -105,9 +105,6 @@ export function AppAuth({ children }: { children: React.ReactNode }) {
       >
         {children}
       </Authenticator>
-      <div className="flex justify-center">
-        <ThemeToggle />
-      </div>
     </View>
   );
 }

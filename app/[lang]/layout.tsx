@@ -4,6 +4,7 @@ import { LocaleProvider } from "@/providers/locale.provider";
 import { getDictionary, type Locale } from "@/lib/dictionaries";
 import "../styles/globals.css";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher/LanguageSwitcher";
+import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }];
@@ -26,6 +27,9 @@ export default async function RootLayout({
           <AppAuth>{children}</AppAuth>
           <div className="absolute top-4 right-4 z-50">
             <LanguageSwitcher />
+          </div>
+          <div className="absolute top-4 right-20 z-50">
+            <ThemeSwitcher />
           </div>
         </LocaleProvider>
       </body>
