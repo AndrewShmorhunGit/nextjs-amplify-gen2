@@ -74,12 +74,12 @@ export function AppAuth({ children }: { children: React.ReactNode }) {
 
   return (
     <View>
-      <div className="text-center mb-6 mt-6">
+      {/* <div className="text-center mb-6 mt-6">
         <h2 className="text-xl font-bold">{t("common.welcome")}</h2>
         <p className="text-sm text-[var(--color-text-light)] mt-2">
           {t("auth.signInMessage")}
         </p>
-      </div>
+      </div> */}
 
       <Authenticator
         components={{
