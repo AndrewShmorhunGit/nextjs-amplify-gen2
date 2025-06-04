@@ -30,9 +30,7 @@ export default async function RootLayout({
         <ThemeProvider>
           <ThemeWrapper>
             <LocaleProvider locale={lang} dictionary={dictionary}>
-              <div className="relative min-h-screen">
-                <AppAuth>{children}</AppAuth>
-              </div>
+              <AppAuth>{children}</AppAuth>
             </LocaleProvider>
           </ThemeWrapper>
         </ThemeProvider>

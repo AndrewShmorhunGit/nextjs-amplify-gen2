@@ -1,14 +1,22 @@
 /* ========== GENERAL BACKGROUND ========== */
 [data-amplify-authenticator] {
   background-color: var(--background) !important;
-  padding: 2rem;
+  /* padding-top: 2rem; */
   border-radius: 1rem;
+}
+
+@media (max-width: 600px) {
+  [data-amplify-authenticator],
+  .amplify-tabs__panel {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+  }
 }
 
 /* ========== FORM PANELS ========== */
 .amplify-tabs__panel {
   background-color: var(--color-bg-form) !important;
-  padding: 2rem;
+  /* padding: 2rem; */
   box-shadow: 0 0 1rem rgba(0, 0, 0, 0.05);
 }
 
@@ -16,7 +24,6 @@
 .amplify-input {
   border-radius: 0.5rem;
   border: 1px solid var(--color-border);
-  /* border: none; */
   background-color: var(--color-bg-input);
   color: var(--color-text-main);
   padding: 0.75rem 1rem;
@@ -48,7 +55,6 @@
   border-color: var(--color-primary-dark) !important;
 }
 
-/* Error state (Amplify ставит aria-invalid или data-invalid) */
 .amplify-field-group__field-wrapper[aria-invalid="true"],
 .amplify-field-group__field-wrapper[data-invalid="true"] {
   border-color: var(--color-text-error) !important;
@@ -151,8 +157,7 @@
   margin-top: 0.5rem;
 }
 
-/* Dark mode – lighten error text a bit */
 .dark .amplify-text--error,
 .dark .amplify-field__error-message {
-  color: #f88379; /* или посветлее, чем var(--color-text-error) */
+  color: #f88379;
 }

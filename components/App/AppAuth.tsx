@@ -74,7 +74,7 @@ export function AppAuth({ children }: { children: React.ReactNode }) {
   }, [locale]);
 
   return (
-    <View>
+    <View className="mt-0">
       <div className="fixed top-4 right-4 z-50 flex gap-2">
         <ThemeSwitcher />
         <LanguageSwitcher />

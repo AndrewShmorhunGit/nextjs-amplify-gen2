@@ -25,7 +25,7 @@ export function ThemeSwitcher() {
 
   if (!mounted) {
     return (
-      <Button variant="outline" size="icon" disabled>
+      <Button variant="outline" disabled>
         <Sun className="h-[1.2rem] w-[1.2rem]" />
       </Button>
     );
@@ -38,7 +38,6 @@ export function ThemeSwitcher() {
   return (
     <Button
       variant="outline"
-      size="icon"
       onClick={toggleTheme}
       aria-label={theme === "dark" ? t("theme.light") : t("theme.dark")}
     >
