@@ -1,6 +1,6 @@
 /* ========== GENERAL BACKGROUND ========== */
 [data-amplify-authenticator] {
-  background-color: var(--color-bg-main) !important;
+  background-color: var(--background) !important;
   padding: 2rem;
   border-radius: 1rem;
 }

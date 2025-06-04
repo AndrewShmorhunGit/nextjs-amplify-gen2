@@ -1,36 +1,28 @@
 "use client";
 
+import { useTheme as useNextTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
-export function useThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+export function useTheme() {
+  const { theme, setTheme, systemTheme } = useNextTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    const savedTheme = localStorage.getItem("theme");
-
-    const applyTheme = (mode: "dark" | "light") => {
-      root.classList.toggle("dark", mode === "dark");
-      root.setAttribute("data-amplify-theme", mode);
-      localStorage.setItem("theme", mode);
-      setIsDark(mode === "dark");
-    };
-
-    if (savedTheme === "dark") {
-      applyTheme("dark");
-    } else {
-      applyTheme("light");
-    }
+    setMounted(true);
   }, []);
 
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const isDark = currentTheme === "dark";
+
   const toggleTheme = () => {
-    const newMode = isDark ? "light" : "dark";
-    const root = window.document.documentElement;
-    root.classList.toggle("dark", newMode === "dark");
-    root.setAttribute("data-amplify-theme", newMode);
-    localStorage.setItem("theme", newMode);
-    setIsDark(newMode === "dark");
+    setTheme(isDark ? "light" : "dark");
   };
 
-  return { isDark, toggleTheme };
+  return {
+    theme: currentTheme,
+    setTheme,
+    isDark,
+    toggleTheme,
+    mounted,
+  };
 }
