@@ -7,6 +7,7 @@ import "@aws-amplify/ui-react/styles.css";
 import config from "@/amplify_outputs.json";
 import { I18n } from "@aws-amplify/core";
 import { ThemeSwitcher } from "../ThemeSwitcher/ThemeSwitcher";
+import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import { useLocale } from "@/providers/locale.provider";
 
 Amplify.configure(config, { ssr: true });
@@ -74,12 +75,10 @@ export function AppAuth({ children }: { children: React.ReactNode }) {
 
   return (
     <View>
-      {/* <div className="text-center mb-6 mt-6">
-        <h2 className="text-xl font-bold">{t("common.welcome")}</h2>
-        <p className="text-sm text-[var(--color-text-light)] mt-2">
-          {t("auth.signInMessage")}
-        </p>
-      </div> */}
+      <div className="fixed top-4 right-4 z-50 flex gap-2">
+        <ThemeSwitcher />
+        <LanguageSwitcher />
+      </div>
 
       <Authenticator
         components={{

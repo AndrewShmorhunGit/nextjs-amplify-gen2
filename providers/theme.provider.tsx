@@ -9,6 +9,8 @@ export function ThemeProvider({ children, ...props }: ThemeProviderProps) {
       defaultTheme="light"
       enableSystem={false}
       themes={["light", "dark"]}
+      disableTransitionOnChange={false}
+      storageKey="app-theme"
       {...props}
     >
       {children}

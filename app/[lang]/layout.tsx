@@ -2,10 +2,10 @@ import type React from "react";
 import { AppAuth } from "@/components/App/AppAuth";
 import { LocaleProvider } from "@/providers/locale.provider";
 import { ThemeProvider } from "@/providers/theme.provider";
+import { ThemeScript } from "@/styles/theme.script";
+import { ThemeWrapper } from "@/styles/theme.wrapper";
 import { getDictionary, type Locale } from "@/lib/dictionaries";
 import "../styles/globals.css";
-import { LanguageSwitcher } from "@/components/LanguageSwitcher/LanguageSwitcher";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }];
@@ -23,17 +23,18 @@ export default async function RootLayout({
 
   return (
     <html lang={lang} suppressHydrationWarning>
-      <body>
+      <head>
+        <ThemeScript />
+      </head>
+      <body className="transition-colors duration-200">
         <ThemeProvider>
-          <LocaleProvider locale={lang} dictionary={dictionary}>
-            <AppAuth>{children}</AppAuth>
-            <div className="absolute top-4 right-4 z-50">
-              <LanguageSwitcher />
-            </div>
-            <div className="absolute top-4 right-20 z-50">
-              <ThemeSwitcher />
-            </div>
-          </LocaleProvider>
+          <ThemeWrapper>
+            <LocaleProvider locale={lang} dictionary={dictionary}>
+              <div className="relative min-h-screen">
+                <AppAuth>{children}</AppAuth>
+              </div>
+            </LocaleProvider>
+          </ThemeWrapper>
         </ThemeProvider>
       </body>
     </html>
