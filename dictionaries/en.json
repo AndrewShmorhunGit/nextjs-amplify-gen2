@@ -1,0 +1,38 @@
+{
+  "navigation": {
+    "home": "Home",
+    "about": "About",
+    "contact": "Contact",
+    "dashboard": "Dashboard"
+  },
+  "common": {
+    "welcome": "Welcome",
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit"
+  },
+  "auth": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register",
+    "email": "Email",
+    "password": "Password",
+    "forgotPassword": "Forgot Password?",
+    "signInMessage": "Please sign in to continue",
+    "agree": "By signing in, you agree to our",
+    "agreeWithPolitics": "Privacy Policy"
+  },
+  "pages": {
+    "home": {
+      "title": "Welcome to Our App",
+      "description": "This is a multilingual Next.js application with internationalization support."
+    },
+    "about": {
+      "title": "About Us",
+      "description": "Learn more about our company and mission."
+    }
+  }
+}
