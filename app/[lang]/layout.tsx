@@ -6,6 +6,7 @@ import { ThemeScript } from "@/styles/theme.script";
 import { ThemeWrapper } from "@/styles/theme.wrapper";
 import { getDictionary, type Locale } from "@/lib/dictionaries";
 import "../styles/globals.css";
+import ReduxProviders from "../redux/provider";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }];
@@ -27,13 +28,15 @@ export default async function RootLayout({
         <ThemeScript />
       </head>
       <body className="transition-colors duration-200">
-        <ThemeProvider>
-          <ThemeWrapper>
-            <LocaleProvider locale={lang} dictionary={dictionary}>
-              <AppAuth>{children}</AppAuth>
-            </LocaleProvider>
-          </ThemeWrapper>
-        </ThemeProvider>
+        <ReduxProviders>
+          <ThemeProvider>
+            <ThemeWrapper>
+              <LocaleProvider locale={lang} dictionary={dictionary}>
+                <AppAuth>{children}</AppAuth>
+              </LocaleProvider>
+            </ThemeWrapper>
+          </ThemeProvider>
+        </ReduxProviders>
       </body>
     </html>
   );
