@@ -7,6 +7,7 @@ import { ThemeWrapper } from "@/styles/theme.wrapper";
 import { getDictionary, type Locale } from "@/lib/dictionaries";
 import "../styles/globals.css";
 import ReduxProviders from "../redux/provider";
+import { AppLayout } from "@/components/App/Layouts/AppLayout";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }];
@@ -32,7 +33,9 @@ export default async function RootLayout({
           <ThemeProvider>
             <ThemeWrapper>
               <LocaleProvider locale={lang} dictionary={dictionary}>
-                <AppAuth>{children}</AppAuth>
+                <AppAuth>
+                  <AppLayout>{children}</AppLayout>
+                </AppAuth>
               </LocaleProvider>
             </ThemeWrapper>
           </ThemeProvider>

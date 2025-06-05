@@ -25,6 +25,13 @@
     "agree": "By signing in, you agree to our",
     "agreeWithPolitics": "Privacy Policy"
   },
+  "dashboard": "Dashboard",
+  "orders": "Orders",
+  "groups": "Groups",
+  "products": "Products",
+  "users": "Users",
+  "settings": "Settings",
+  "logout": "Logout",
   "pages": {
     "home": {
       "title": "Welcome to Our App",
