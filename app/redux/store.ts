@@ -1,18 +1,42 @@
-"use client";
-import { combineReducers, configureStore } from "@reduxjs/toolkit";
-// import counterReducer from "./features/counter/counter.slice";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
+import {
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
+} from "redux-persist/es/constants";
 
-export const rootReducer = combineReducers({
-  // counter: counterReducer,
+import userReducer from "./slices/user.slice";
+
+const persistConfig = {
+  key: "root",
+  storage,
+  whitelist: ["user"],
+};
+
+const rootReducer = combineReducers({
+  user: userReducer,
 });
 
-export function setupStore() {
-  return configureStore({
-    reducer: rootReducer,
-    // [api.reducerPath]: api.reducer,
-  });
-}
+const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppStore = ReturnType<typeof setupStore>;
-export type AppDispatch = AppStore["dispatch"];
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
+});
+
+const persistor = persistStore(store);
+
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
+
+export { store, persistor };

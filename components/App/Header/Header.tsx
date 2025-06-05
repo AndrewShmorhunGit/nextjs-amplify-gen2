@@ -5,7 +5,7 @@ import { Search, Clock, Server } from "lucide-react";
 import { useLocale } from "@/providers/locale.provider";
 import { format } from "date-fns";
 import { ru, enUS } from "date-fns/locale";
-import { ShieldLogo } from "@/components/Logos/SheildLogo";
+import { ShieldLogo } from "@/components/Logos/ShieldLogo";
 
 export function Header() {
   const { locale } = useLocale();

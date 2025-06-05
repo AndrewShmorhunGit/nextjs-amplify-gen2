@@ -1,6 +1,11 @@
-import { ShieldLogo } from "@/components/Logos/SheildLogo";
+"use client";
+import { useAppSelector } from "@/app/redux/store.hooks";
+import { ShieldLogo } from "@/components/Logos/ShieldLogo";
 
 export default function HomePage() {
+  const user = useAppSelector((state) => state.user.user);
+  console.log(user);
+
   return (
     <div className="flex items-center justify-center bg-[var(--color-bg-main)]">
       <div className="text-center mt-24">
@@ -13,7 +18,7 @@ export default function HomePage() {
           </h1>
         </div>
         <p className="text-lg text-[var(--color-text-light)]">
-          Welocme `UserName`!
+          {`Welcome ${user?.preferredUsername}!`}
         </p>
       </div>
     </div>
