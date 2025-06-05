@@ -10,7 +10,7 @@ import { ThemeSwitcher } from "../ThemeSwitcher/ThemeSwitcher";
 import { LanguageSwitcher } from "../LanguageSwitcher/LanguageSwitcher";
 import { useLocale } from "@/providers/locale.provider";
 import { amplifyDictionary } from "@/lib/dictionaries";
-import { AuthWrapper } from "./AppWrapper";
+import { AuthWrapper } from "./AuthWrapper";
 
 Amplify.configure(config, { ssr: true });
 
