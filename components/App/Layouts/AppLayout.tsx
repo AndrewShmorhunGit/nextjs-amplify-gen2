@@ -13,11 +13,14 @@ export function AppLayout({ children }: { children: React.ReactNode }) {
     <div className="flex h-screen flex-col bg-[var(--color-bg-main)]">
       <Header />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar />
+        <Sidebar
+          collapsed={sidebarCollapsed}
+          onToggle={() => setSidebarCollapsed((prev) => !prev)}
+        />
         <main
           className={cn(
-            "flex-1 overflow-y-auto p-6 transition-all duration-200",
-            sidebarCollapsed ? "ml-[60px]" : "ml-[200px]"
+            "flex-1 overflow-y-auto p-6 transition-all duration-300",
+            sidebarCollapsed ? "ml-[70px]" : "ml-[220px]"
           )}
         >
           {children}

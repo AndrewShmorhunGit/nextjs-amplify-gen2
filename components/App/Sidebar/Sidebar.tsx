@@ -1,6 +1,3 @@
-"use client";
-
-import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useParams } from "next/navigation";
 import { cn } from "@/styles/utils";
@@ -27,8 +24,12 @@ const navIcons = {
   settings: Settings,
 };
 
-export function Sidebar() {
-  const [collapsed, setCollapsed] = useState(false);
+interface SidebarProps {
+  collapsed: boolean;
+  onToggle: () => void;
+}
+
+export const Sidebar = ({ collapsed, onToggle }: SidebarProps) => {
   const pathname = usePathname();
   const params = useParams();
   const { t } = useLocale();
@@ -62,7 +63,7 @@ export function Sidebar() {
       <div>
         {/* Toggle button */}
         <button
-          onClick={() => setCollapsed(!collapsed)}
+          onClick={onToggle}
           className="absolute top-2 right-2 z-20 p-1 rounded hover:bg-[var(--color-bg-form)] transition"
           aria-label="Toggle Sidebar"
         >
@@ -82,15 +83,27 @@ export function Sidebar() {
         >
           <div
             className={cn(
-              "relative overflow-hidden rounded-full border-2 border-[var(--color-primary)]",
+              "relative overflow-hidden rounded-full border-2 border-[var(--color-primary)] flex items-center justify-center bg-[var(--color-bg-form)]",
               !collapsed ? "h-20 w-20" : "h-14 w-14"
             )}
           >
-            <img
+            {/* <img
               src="/placeholder.svg?height=80&width=80"
               alt="User Avatar"
               className="h-full w-full object-cover"
-            />
+            /> */}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              className="w-2/3 h-2/3 text-[var(--color-text-light)]"
+            >
+              <path
+                fillRule="evenodd"
+                d="M12 2a5 5 0 00-5 5v1a5 5 0 0010 0V7a5 5 0 00-5-5zm-3 6V7a3 3 0 116 0v1a3 3 0 11-6 0zm-5 9.75A4.75 4.75 0 018.75 13h6.5A4.75 4.75 0 0120 17.75V20a1 1 0 11-2 0v-2.25a2.75 2.75 0 00-2.75-2.75h-6.5A2.75 2.75 0 006 17.75V20a1 1 0 11-2 0v-2.25z"
+                clipRule="evenodd"
+              />
+            </svg>
           </div>
         </div>
 
@@ -158,4 +171,4 @@ export function Sidebar() {
       </div>
     </aside>
   );
-}
+};
