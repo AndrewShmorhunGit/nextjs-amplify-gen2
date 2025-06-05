@@ -8,11 +8,7 @@ import { ru, enUS } from "date-fns/locale";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher/ThemeSwitcher";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher/LanguageSwitcher";
 
-interface HeaderProps {
-  toggleSidebar: () => void;
-}
-
-export function Header({ toggleSidebar }: HeaderProps) {
+export function Header() {
   const { locale } = useLocale();
   const currentDate = new Date();
 

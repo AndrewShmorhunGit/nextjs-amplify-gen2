@@ -9,15 +9,11 @@ import { cn } from "@/styles/utils";
 export function AppLayout({ children }: { children: React.ReactNode }) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
-  const toggleSidebar = () => {
-    setSidebarCollapsed(!sidebarCollapsed);
-  };
-
   return (
     <div className="flex h-screen flex-col bg-[var(--color-bg-main)]">
-      <Header toggleSidebar={toggleSidebar} />
+      <Header />
       <div className="flex flex-1 overflow-hidden">
-        <Sidebar collapsed={sidebarCollapsed} />
+        <Sidebar />
         <main
           className={cn(
             "flex-1 overflow-y-auto p-6 transition-all duration-200",

@@ -1,7 +1,7 @@
 export default function HomePage() {
   return (
-    <div className="flex min-h-screen items-center justify-center bg-[var(--color-bg-main)]">
-      <div className="text-center">
+    <div className="flex items-center justify-center bg-[var(--color-bg-main)]">
+      <div className="text-center mt-24">
         <div className="mb-8">
           <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-[var(--color-primary)]">
             <svg
