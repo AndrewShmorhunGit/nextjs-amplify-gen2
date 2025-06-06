@@ -1,19 +1,13 @@
-import { a, defineData } from "@aws-amplify/backend";
+import { a, ClientSchema, defineData } from "@aws-amplify/backend";
 
 export const schema = a
   .schema({
-    User: a
-      .model({
-        name: a.string().required(),
-        email: a.email().required(),
-        role: a.string().required(),
-        orders: a.hasMany("Order", "userId"),
-      })
-      .authorization((allow) => [
-        allow.owner(),
-        allow.publicApiKey().to(["read"]),
-      ]),
-
+    User: a.model({
+      name: a.string().required(),
+      email: a.email().required(),
+      role: a.string().required(),
+      orders: a.hasMany("Order", "userId"),
+    }),
     Order: a.model({
       title: a.string().required(),
       description: a.string(),
@@ -34,7 +28,7 @@ export const schema = a
       priceUSD: a.float().required(),
       priceUAH: a.float().required(),
       defaultCurrency: a.string().required(), // "USD"
-      orderId: a.id().required(),
+      orderId: a.id(),
       order: a.belongsTo("Order", "orderId"),
       groupId: a.id(),
       group: a.belongsTo("Group", "groupId"),
@@ -48,7 +42,7 @@ export const schema = a
   })
   .authorization((allow) => [allow.authenticated()]);
 
-export type Schema = typeof schema;
+export type Schema = ClientSchema<typeof schema>;
 
 export const data = defineData({
   schema,

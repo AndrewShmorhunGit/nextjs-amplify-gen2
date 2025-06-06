@@ -11,7 +11,7 @@ export default async function UsersPage() {
       <div className="mt-6 grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
         {users.map((user) => (
           <div
-            key={user.id}
+            key={user.email}
             className="flex flex-col rounded-md border border-[var(--color-border)] bg-[var(--color-bg-form)] p-4"
           >
             <div className="flex items-center">

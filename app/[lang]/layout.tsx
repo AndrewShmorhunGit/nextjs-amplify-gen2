@@ -36,7 +36,8 @@ export default async function RootLayout({
               <LocaleProvider locale={lang} dictionary={dictionary}>
                 <AppAuth>
                   <AppLayout>
-                    <CreateUserLayout>{children}</CreateUserLayout>
+                    {children}
+                    {/* <CreateUserLayout>{children}</CreateUserLayout> */}
                   </AppLayout>
                 </AppAuth>
               </LocaleProvider>
