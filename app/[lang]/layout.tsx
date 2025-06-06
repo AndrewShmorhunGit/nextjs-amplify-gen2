@@ -8,7 +8,6 @@ import { getDictionary, type Locale } from "@/lib/dictionaries";
 import "../styles/globals.css";
 import ReduxProviders from "../redux/provider";
 import { AppLayout } from "@/components/App/Layouts/AppLayout";
-import CreateUserLayout from "@/components/App/Layouts/CreateUserLayout";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }];

@@ -15,18 +15,11 @@ export async function syncUserToDB(email: string, preferredUsername: string) {
     });
 
     if (!existing.length) {
-      await client.models.User.create(
-        {
-          name: preferredUsername,
-          email,
-          role: "user",
-        },
-        {
-          condition: {
-            email: { ne: email }, // only create if not exists
-          },
-        }
-      );
+      await client.models.User.create({
+        name: preferredUsername,
+        email,
+        role: "user",
+      });
       console.log("✅ User has been created in the database");
     } else {
       console.log("ℹ️ User already exists in the database");

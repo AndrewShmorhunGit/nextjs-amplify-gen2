@@ -3,8 +3,8 @@
 import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
-import { Button } from "@/components/ui/button";
 import { useLocale } from "@/providers/locale.provider";
+import { Button } from "@/components/ui/button";
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
