@@ -1,5 +1,5 @@
 import { PageTitle } from "@/components/App/Typography/PageTitle";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/Buttons/PrimaryButton";
 
 export default function SettingsPage() {
   return (

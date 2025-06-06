@@ -1,9 +1,9 @@
 "use client";
 
 import { useRouter, usePathname } from "next/navigation";
-import { Button } from "@/components/ui/button";
 import { useLocale } from "@/providers/locale.provider";
 import { locales, localeNames, type Locale } from "@/lib/dictionaries";
+import { Button } from "../Buttons/PrimaryButton";
 
 export function LanguageSwitcher() {
   const router = useRouter();

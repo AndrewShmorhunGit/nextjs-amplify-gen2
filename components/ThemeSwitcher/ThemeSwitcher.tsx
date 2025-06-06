@@ -4,7 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 import { useLocale } from "@/providers/locale.provider";
-import { Button } from "@/components/ui/button";
+import { Button } from "../Buttons/PrimaryButton";
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useTheme();
