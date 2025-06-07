@@ -137,3 +137,6 @@ export const amplifyDictionary = {
     "Code resent successfully": "Код повторно отправлен успешно",
   },
 };
+
+/* We Emailed You
+Your code is on the way. To log in, enter the code we emailed to a***@g***. It may take a minute to arrive. */

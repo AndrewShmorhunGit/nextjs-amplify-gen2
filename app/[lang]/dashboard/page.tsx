@@ -1,5 +1,6 @@
 "use client";
 import { useAppSelector } from "@/app/redux/store.hooks";
+import { CreateSeedButton } from "@/components/Buttons/CreateSeedButton";
 import { ShieldLogo } from "@/components/Logos/ShieldLogo";
 
 export default function HomePage() {
@@ -17,9 +18,10 @@ export default function HomePage() {
             Inventory
           </h1>
         </div>
-        <p className="text-lg text-[var(--color-text-light)]">
+        <p className="text-lg text-[var(--color-text-light)] mb-12">
           {`Welcome ${user?.preferredUsername}!`}
         </p>
+        <CreateSeedButton />
       </div>
     </div>
   );

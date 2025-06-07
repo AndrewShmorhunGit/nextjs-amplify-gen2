@@ -15,8 +15,6 @@ export function AuthWrapper({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
 
   const hasSyncedRef = useRef(false); // 🛑 prevent duplicate syncs
-  /* We Emailed You
-Your code is on the way. To log in, enter the code we emailed to a***@g***. It may take a minute to arrive. */
 
   useEffect(() => {
     const loadUser = async () => {

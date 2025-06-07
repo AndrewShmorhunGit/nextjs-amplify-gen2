@@ -1,13 +1,19 @@
+import { cookiesClient } from "@/utils/amplify-utils";
 import { PageTitle } from "@/components/App/Typography/PageTitle";
 
-export default function GroupsPage() {
+export default async function GroupsPage() {
+  const { data: groups } = await cookiesClient.models.Group.list({
+    // limit: 100,
+  });
+
   return (
     <div>
-      <PageTitle title="Groups" count={25} />
+      <PageTitle title="Groups" count={groups.length} />
+
       <div className="mt-6 grid grid-cols-1 gap-4">
-        {Array.from({ length: 4 }).map((_, i) => (
+        {groups.map((group) => (
           <div
-            key={i}
+            key={group.id}
             className="flex items-center justify-between rounded-md border border-[var(--color-border)] bg-[var(--color-bg-form)] p-4"
           >
             <div className="flex items-center">
@@ -29,14 +35,21 @@ export default function GroupsPage() {
               </div>
               <div>
                 <div className="text-sm font-medium text-[var(--color-text-main)]">
-                  Длинное предлинное длиннючее название группы
+                  {group.name}
                 </div>
+                {group.type && (
+                  <div className="text-xs text-[var(--color-text-light)]">
+                    {group.type}
+                  </div>
+                )}
               </div>
             </div>
+
             <div className="flex items-center gap-8">
               <div className="text-center">
                 <div className="text-sm font-medium text-[var(--color-text-main)]">
-                  23
+                  {/* Пока фейк: продукты не загружены в этом запросе */}
+                  {group.products?.length ?? "—"}
                 </div>
                 <div className="text-xs text-[var(--color-text-light)]">
                   Продукта
@@ -44,12 +57,20 @@ export default function GroupsPage() {
               </div>
               <div className="text-center">
                 <div className="text-sm font-medium text-[var(--color-text-main)]">
-                  06 / Окт / 2017
+                  {new Date(group.createdAt).toLocaleDateString("uk-UA", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </div>
                 <div className="text-xs text-[var(--color-text-light)]">
-                  10 / 12
+                  {new Date(group.updatedAt).toLocaleDateString("uk-UA", {
+                    day: "2-digit",
+                    month: "2-digit",
+                  })}
                 </div>
               </div>
+
               <button className="text-[var(--color-text-light)] hover:text-[var(--color-primary)]">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
