@@ -8,12 +8,13 @@ export const schema = a
       role: a.string().required(),
       orders: a.hasMany("Order", "userId"),
     }),
+
     Order: a.model({
       title: a.string().required(),
       description: a.string(),
       userId: a.id().required(),
       user: a.belongsTo("User", "userId"),
-      products: a.hasMany("Product", "orderId"),
+      products: a.hasMany("OrderProduct", "orderId"),
     }),
 
     Product: a.model({
@@ -28,10 +29,16 @@ export const schema = a
       priceUSD: a.float().required(),
       priceUAH: a.float().required(),
       defaultCurrency: a.string().required(), // "USD"
-      orderId: a.id(),
-      order: a.belongsTo("Order", "orderId"),
       groupId: a.id(),
       group: a.belongsTo("Group", "groupId"),
+      orders: a.hasMany("OrderProduct", "productId"),
+    }),
+
+    OrderProduct: a.model({
+      orderId: a.id().required(),
+      order: a.belongsTo("Order", "orderId"),
+      productId: a.id().required(),
+      product: a.belongsTo("Product", "productId"),
     }),
 
     Group: a.model({

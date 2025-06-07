@@ -11,48 +11,76 @@ export default async function ProductsPage() {
         {products.map((p) => (
           <div
             key={p.id}
-            className="flex items-center justify-between rounded-md border border-[var(--color-border)] bg-[var(--color-bg-form)] p-4"
+            className="flex flex-col gap-2 rounded-md border border-[var(--color-border)] bg-[var(--color-bg-form)] p-4"
           >
-            <div className="flex items-center">
-              <div className="mr-2 h-2 w-2 rounded-full bg-yellow-400"></div>
-              <div className="mr-4">
-                <img
-                  src={p.photo || "/placeholder.svg?height=40&width=40"}
-                  alt={p.title}
-                  className="h-10 w-10 rounded-md border border-[var(--color-border)]"
-                />
-              </div>
-              <div>
-                <div className="text-sm font-medium text-[var(--color-text-main)]">
+            <div className="flex items-center gap-4">
+              <img
+                src={p.photo || "/placeholder.svg?height=40&width=40"}
+                alt={p.title}
+                className="h-14 w-14 rounded-md border border-[var(--color-border)] object-cover"
+              />
+              <div className="flex flex-col text-sm">
+                <span className="font-semibold text-[var(--color-text-main)]">
                   {p.title}
-                </div>
-                <div className="text-xs text-[var(--color-text-light)]">
-                  {p.serialNumber}
+                </span>
+                <span className="text-[var(--color-text-light)] text-xs">
+                  Serial: {p.serialNumber}
+                </span>
+                <span className="text-[var(--color-text-light)] text-xs">
+                  Type: {p.type}
+                </span>
+                <span className="text-[var(--color-text-light)] text-xs">
+                  Group: {p.group?.name || "—"}
+                </span>
+              </div>
+              <div className="ml-auto text-right text-sm">
+                <div
+                  className={`inline-block rounded-full px-2 py-0.5 text-xs font-medium ${
+                    p.isNew
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-200 text-gray-700"
+                  }`}
+                >
+                  {p.isNew ? "New" : "Used"}
                 </div>
               </div>
             </div>
-            <div className="flex items-center gap-6">
-              <div className="text-sm font-medium text-[var(--color-text-main)]">
-                {p.isNew ? "новый" : "б/у"}
-              </div>
-              <div className="text-center">
-                <div className="text-sm font-medium text-[var(--color-text-main)]">
-                  {new Date(p.guaranteeStart).toLocaleDateString()}
+
+            <div className="grid grid-cols-3 gap-4 text-sm mt-2">
+              <div>
+                <div className="text-[var(--color-text-main)] font-medium">
+                  Warranty
                 </div>
                 <div className="text-xs text-[var(--color-text-light)]">
-                  по {new Date(p.guaranteeEnd).toLocaleDateString()}
-                </div>
-              </div>
-              <div className="text-right">
-                <div className="text-sm font-medium text-[var(--color-text-main)]">
-                  {p.priceUAH.toLocaleString()} uah
+                  From: {new Date(p.guaranteeStart).toLocaleDateString()}
                 </div>
                 <div className="text-xs text-[var(--color-text-light)]">
-                  {p.priceUSD.toLocaleString()} $
+                  To: {new Date(p.guaranteeEnd).toLocaleDateString()}
                 </div>
               </div>
-              <div className="w-40 text-sm text-[var(--color-text-main)]">
-                {p.group?.name || "—"}
+
+              <div>
+                <div className="text-[var(--color-text-main)] font-medium">
+                  Price
+                </div>
+                <div className="text-xs text-[var(--color-text-light)]">
+                  {p.priceUAH.toLocaleString()} UAH
+                </div>
+                <div className="text-xs text-[var(--color-text-light)]">
+                  {p.priceUSD.toLocaleString()} USD
+                </div>
+                <div className="text-xs text-[var(--color-text-light)]">
+                  Default currency: {p.defaultCurrency}
+                </div>
+              </div>
+
+              <div>
+                <div className="text-[var(--color-text-main)] font-medium">
+                  Specification
+                </div>
+                <div className="text-xs text-[var(--color-text-light)] whitespace-pre-wrap">
+                  {p.specification || "—"}
+                </div>
               </div>
             </div>
           </div>
