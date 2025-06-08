@@ -23,6 +23,8 @@ const buttonVariants = cva(
           "bg-[var(--color-primary)] text-[var(--color-button-text)] hover:bg-[var(--color-primary-dark)] transition-all font-semibold uppercase tracking-wider rounded-full",
         error:
           "bg-[var(--color-text-error)] text-white hover:bg-[var(--color-text-error)]/80 transition-all font-semibold uppercase tracking-wider rounded-full",
+        errorGhost:
+          "bg-white text-[var(--color-text-error)] hover:bg-white/80 transition-all font-semibold uppercase tracking-wider rounded-full ",
       },
       size: {
         default: "h-9 px-4 py-2",

@@ -68,15 +68,11 @@ export function DeleteDialog({
           <Button
             variant="primary"
             onClick={onClose}
-            className="bg-white/30 text-[hsl(var(--color-button-text))] hover:bg-white/40 backdrop-blur"
+            className="text-[hsl(var(--card-foreground))]  hover:bg-white/40 backdrop-blur"
           >
             Cancel
           </Button>
-          <Button
-            variant="primary"
-            onClick={onConfirm}
-            className="bg-white/30 text-[hsl(var(--color-button-text))] hover:bg-white/40 backdrop-blur"
-          >
+          <Button variant="errorGhost" onClick={onConfirm}>
             <Trash2 size={14} />
             Delete
           </Button>
