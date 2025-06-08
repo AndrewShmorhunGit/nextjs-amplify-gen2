@@ -3,7 +3,7 @@
 import { useRouter, usePathname } from "next/navigation";
 import { useLocale } from "@/providers/locale.provider";
 import { locales, localeNames, type Locale } from "@/lib/dictionaries";
-import { Button } from "../Buttons/PrimaryButton";
+import { Button } from "../Buttons/Button";
 
 export function LanguageSwitcher() {
   const router = useRouter();

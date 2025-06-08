@@ -3,7 +3,7 @@
 import { useTransition, useState } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
-import { Button } from "./PrimaryButton";
+import { Button } from "./Button";
 import { users, groups, orders, products } from "@/seed/data";
 
 const client = generateClient<Schema>();
@@ -83,7 +83,7 @@ export const CreateSeedButton = () => {
   };
 
   return (
-    <Button onClick={handleSeed} disabled={isPending}>
+    <Button variant="primary" onClick={handleSeed} disabled={isPending}>
       {isPending ? "Seeding..." : done ? "✅ Seeded" : "Create Seed"}
     </Button>
   );
