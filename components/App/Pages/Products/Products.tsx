@@ -1,6 +1,6 @@
 import { cookiesClient } from "@/utils/amplify-utils";
 import { PageTitle } from "@/components/App/Typography/PageTitle";
-import { ProductItem } from "./Product/ProducItem";
+import { ProductItem } from "./Product/ProductItem";
 
 export async function Products() {
   // const selectionSet: ModelPath<Schema["Product"]["type"]>[] = [
