@@ -1,15 +1,18 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Search, Clock, Server } from "lucide-react";
+import { Search, Clock, Users } from "lucide-react";
 import { useLocale } from "@/providers/locale.provider";
 import { format } from "date-fns";
 import { ru, enUS } from "date-fns/locale";
 import { ShieldLogo } from "@/components/Logos/ShieldLogo";
+import { useConnectionCount } from "@/hooks/useConnectionCount";
 
 export function Header() {
   const { locale } = useLocale();
   const dateLocale = locale === "ru" ? ru : enUS;
+  const websocketUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL || "";
+  const { count, isConnected } = useConnectionCount(websocketUrl);
 
   const [now, setNow] = useState(new Date());
 
@@ -46,7 +49,7 @@ export function Header() {
             <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-text-light)]" />
             <input
               type="text"
-              placeholder="Поиск"
+              placeholder="Search"
               className="h-10 w-[300px] rounded-md border border-[var(--color-border)] bg-[var(--color-bg-input)] pl-10 pr-4 text-sm text-[var(--color-text-main)] focus:border-[var(--color-primary)] focus:outline-none"
             />
           </div>
@@ -64,8 +67,16 @@ export function Header() {
           </div>
 
           <div className="grid grid-cols-[auto_1fr] gap-x-2 gap-y-1 text-sm items-center">
-            <Server className="h-4 w-4 text-[var(--color-primary)]" />
-            <span className="text-[var(--color-text-error)]">Disconnected</span>
+            <Users className="h-4 w-4 text-[var(--color-primary)]" />
+            <span
+              className={
+                isConnected
+                  ? "text-[var(--color-text-main)]"
+                  : "text-[var(--color-text-error)]"
+              }
+            >
+              {isConnected ? `${count} online` : "Disconnected"}
+            </span>
             <Clock className="h-4 w-4 text-[var(--color-primary)]" />
             <span className="text-[var(--color-text-main)] font-semibold">
               {timeFormatted}
