@@ -38,11 +38,11 @@ export default function SettingsPage() {
               <div className="flex items-center">
                 <div className="mr-4">
                   <div className="h-16 w-16 overflow-hidden rounded-full">
-                    <img
+                    {/* <img
                       src="/placeholder.svg?height=64&width=64"
                       alt="User Avatar"
                       className="h-full w-full object-cover"
-                    />
+                    /> */}
                   </div>
                 </div>
                 <Button variant="outline" size="sm">

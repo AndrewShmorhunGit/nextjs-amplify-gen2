@@ -45,7 +45,7 @@ export function OrdersPageClient({ orders }: { orders: OrderSelection[] }) {
     Record<string, BaseProduct[]>
   >({});
   const [isLoading, setIsLoading] = useState(true);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
 
   // Load data for all orders on mount
   useEffect(() => {

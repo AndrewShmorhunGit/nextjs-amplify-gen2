@@ -97,7 +97,7 @@ export const CreateSeedButton = () => {
           const groupId = groupMap.get(product.groupName);
           if (!groupId) continue;
 
-          const { groupName, serialNumber, ...rest } = product;
+          const { serialNumber, ...rest } = product;
 
           const { data: existingProducts } = await client.models.Product.list({
             filter: {

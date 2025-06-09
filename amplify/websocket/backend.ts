@@ -4,7 +4,7 @@ import { Table, AttributeType, BillingMode } from "aws-cdk-lib/aws-dynamodb";
 import { PolicyStatement, Effect } from "aws-cdk-lib/aws-iam";
 import { LogGroup, RetentionDays } from "aws-cdk-lib/aws-logs";
 import { RemovalPolicy } from "aws-cdk-lib";
-import type { AppBackend } from "backend";
+import type { AppBackend } from "../backend";
 
 export const createWebSocketBackend = (backend: AppBackend) => {
   // Get Lambda function from backend definition

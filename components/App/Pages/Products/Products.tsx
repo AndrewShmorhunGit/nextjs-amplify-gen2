@@ -1,9 +1,7 @@
 import { cookiesClient } from "@/utils/amplify-utils";
-import { PageTitle } from "@/components/App/Typography/PageTitle";
-import { ProductItem } from "./Product/ProductItem";
+import { ProductsClient } from "./ProductsClient";
 
 export async function Products() {
-  // const selectionSet: ModelPath<Schema["Product"]["type"]>[] = [
   const selectionSet = [
     "id",
     "title",
@@ -25,14 +23,5 @@ export async function Products() {
     selectionSet,
   });
 
-  return (
-    <div>
-      <PageTitle title="Products" count={products.length} />
-      <div className="mt-6 space-y-2">
-        {products.map((product) => (
-          <ProductItem key={product.id} product={product} />
-        ))}
-      </div>
-    </div>
-  );
+  return <ProductsClient products={products} />;
 }

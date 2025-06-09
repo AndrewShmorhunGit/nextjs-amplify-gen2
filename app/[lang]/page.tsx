@@ -12,5 +12,5 @@ export default function LocaleLandingPage() {
     if (authStatus === "authenticated") {
       router.replace(`${window.location.pathname}/dashboard`);
     }
-  }, [authStatus]);
+  }, [authStatus, router]);
 }

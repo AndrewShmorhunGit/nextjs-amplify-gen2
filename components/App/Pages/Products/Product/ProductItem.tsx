@@ -115,7 +115,7 @@ export function ProductItem({
   if (compact) {
     return (
       <div
-        className="flex items-center gap-4 py-4 px-6 transition-colors cursor-pointer"
+        className="flex items-center gap-4 py-4 px-6 transition-colors"
         onMouseEnter={(e) => {
           e.currentTarget.style.backgroundColor = "var(--color-bg-input)";
         }}
@@ -249,7 +249,6 @@ export function ProductItem({
           {product.specification || "—"}
         </div>
       </div>
-
       {/* Status */}
       <div className="min-w-[100px] text-xs">
         <span className="font-medium" style={{ color: statusColor }}>
