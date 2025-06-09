@@ -9,6 +9,7 @@ import "../styles/globals.css";
 import ReduxProviders from "../redux/provider";
 import { AppLayout } from "@/components/App/Layouts/AppLayout";
 import { DialogProvider } from "@/providers/dialog.provider";
+import { getWebSocketUrl } from "@/utils/get-websocket-url";
 
 export async function generateStaticParams() {
   return [{ lang: "en" }, { lang: "ru" }];
@@ -24,6 +25,7 @@ export default async function RootLayout({
   const { lang } = await params;
   const dictionary = await getDictionary(lang);
 
+  const websocketUrl = getWebSocketUrl() || "";
   return (
     <html lang={lang} suppressHydrationWarning>
       <head>
@@ -36,7 +38,7 @@ export default async function RootLayout({
               <LocaleProvider locale={lang} dictionary={dictionary}>
                 <AppAuth>
                   <DialogProvider>
-                    <AppLayout>
+                    <AppLayout websocketUrl={websocketUrl}>
                       {children}
                       {/* <CreateUserLayout>{children}</CreateUserLayout> */}
                     </AppLayout>

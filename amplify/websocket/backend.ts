@@ -7,13 +7,12 @@ import { RemovalPolicy } from "aws-cdk-lib";
 import type { AppBackend } from "backend";
 
 export const createWebSocketBackend = (backend: AppBackend) => {
-  // Create WebSocket stack
-  const websocketStack = backend.createStack("websocket-stack");
+  // Get Lambda function from backend definition
+  const lambda = backend.websocketFunction.resources.lambda;
+  // Create a custom stack for WebSocket infra
+  const websocketStack = lambda.stack;
 
-  // Use lambda function defined in defineBackend
-  const websocketHandler = backend.websocketFunction.resources.lambda;
-
-  // DynamoDB table for WebSocket connections
+  // Create DynamoDB table before assigning permissions
   const connectionsTable = new Table(websocketStack, "ConnectionsTable", {
     tableName: "websocket-connections",
     partitionKey: { name: "connectionId", type: AttributeType.STRING },
@@ -21,36 +20,31 @@ export const createWebSocketBackend = (backend: AppBackend) => {
   });
   connectionsTable.applyRemovalPolicy(RemovalPolicy.DESTROY);
 
-  // WebSocket API and integrations
+  // Create WebSocket API with all route integrations
   const webSocketApi = new WebSocketApi(websocketStack, "WebSocketApi", {
     connectRouteOptions: {
-      integration: new WebSocketLambdaIntegration(
-        "ConnectIntegration",
-        websocketHandler
-      ),
+      integration: new WebSocketLambdaIntegration("ConnectIntegration", lambda),
     },
     disconnectRouteOptions: {
       integration: new WebSocketLambdaIntegration(
         "DisconnectIntegration",
-        websocketHandler
+        lambda
       ),
     },
     defaultRouteOptions: {
-      integration: new WebSocketLambdaIntegration(
-        "DefaultIntegration",
-        websocketHandler
-      ),
+      integration: new WebSocketLambdaIntegration("DefaultIntegration", lambda),
     },
   });
 
-  const webSocketStage = new WebSocketStage(websocketStack, "WebSocketStage", {
+  // Create stage for WebSocket API
+  const websocketStage = new WebSocketStage(websocketStack, "WebSocketStage", {
     webSocketApi,
     stageName: "prod",
     autoDeploy: true,
   });
 
-  // Grant Lambda permissions
-  websocketHandler.addToRolePolicy(
+  // Permissions: DynamoDB access
+  lambda.addToRolePolicy(
     new PolicyStatement({
       effect: Effect.ALLOW,
       actions: ["dynamodb:PutItem", "dynamodb:DeleteItem", "dynamodb:Scan"],
@@ -58,7 +52,8 @@ export const createWebSocketBackend = (backend: AppBackend) => {
     })
   );
 
-  websocketHandler.addToRolePolicy(
+  // Permissions: API Gateway connections
+  lambda.addToRolePolicy(
     new PolicyStatement({
       effect: Effect.ALLOW,
       actions: ["execute-api:ManageConnections"],
@@ -66,9 +61,9 @@ export const createWebSocketBackend = (backend: AppBackend) => {
     })
   );
 
-  // Optional: Create log group with retention
+  // Optional log group configuration
   new LogGroup(websocketStack, "WebSocketLambdaLogs", {
-    logGroupName: `/aws/lambda/${websocketHandler.functionName}`,
+    logGroupName: `/aws/lambda/${lambda.functionName}`,
     retention: RetentionDays.THREE_DAYS,
     removalPolicy: RemovalPolicy.DESTROY,
   });
@@ -76,7 +71,7 @@ export const createWebSocketBackend = (backend: AppBackend) => {
   // Output WebSocket URL
   backend.addOutput({
     custom: {
-      websocketUrl: webSocketStage.url,
+      websocketUrl: websocketStage.url,
     },
   });
 };

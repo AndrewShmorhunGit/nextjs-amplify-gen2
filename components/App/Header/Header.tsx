@@ -8,10 +8,9 @@ import { ru, enUS } from "date-fns/locale";
 import { ShieldLogo } from "@/components/Logos/ShieldLogo";
 import { useConnectionCount } from "@/hooks/useConnectionCount";
 
-export function Header() {
+export function Header({ websocketUrl }: { websocketUrl: string }) {
   const { locale } = useLocale();
   const dateLocale = locale === "ru" ? ru : enUS;
-  const websocketUrl = process.env.NEXT_PUBLIC_WEBSOCKET_URL || "";
   const { count, isConnected } = useConnectionCount(websocketUrl);
 
   const [now, setNow] = useState(new Date());

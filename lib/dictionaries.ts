@@ -82,6 +82,7 @@ export const amplifyDictionary = {
   ru: {
     // General
     "Sign in": "Войти",
+    "Sign In": "Войти",
     "Sign Up": "Регистрация",
     "Create Account": "Создать аккаунт",
     "Forgot your password?": "Забыли пароль?",

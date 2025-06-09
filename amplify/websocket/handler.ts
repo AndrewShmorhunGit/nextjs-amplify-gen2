@@ -23,9 +23,8 @@ export const handler: APIGatewayProxyHandler = async (event) => {
   const stage = event.requestContext.stage!;
 
   try {
-    // Handle connection
+    // Handle $connect: store new connection in DynamoDB
     if (routeKey === "$connect") {
-      // Store connection in DynamoDB
       await docClient.send(
         new PutCommand({
           TableName: process.env.CONNECTIONS_TABLE_NAME!,
@@ -37,9 +36,9 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       );
       console.log(`Connection stored: ${connectionId}`);
     }
-    // Handle disconnection
+
+    // Handle $disconnect: remove connection from DynamoDB
     else if (routeKey === "$disconnect") {
-      // Remove connection from DynamoDB
       await docClient.send(
         new DeleteCommand({
           TableName: process.env.CONNECTIONS_TABLE_NAME!,
@@ -48,38 +47,62 @@ export const handler: APIGatewayProxyHandler = async (event) => {
       );
       console.log(`Connection removed: ${connectionId}`);
     }
-    // Handle messages
+
+    // Handle $default: broadcast connection count to all clients
     else if (routeKey === "$default") {
       const message = JSON.parse(event.body || "{}");
       console.log("Received message:", message);
 
-      // If client requests connection count
+      // Only respond if the message requests connection count
       if (message.type === "GET_COUNT") {
-        // Get connection count
-        const connections = await docClient.send(
+        // Get total connection count
+        const scanResult = await docClient.send(
           new ScanCommand({
             TableName: process.env.CONNECTIONS_TABLE_NAME!,
-            Select: "COUNT",
           })
         );
 
-        const connectionCount = connections.Count || 0;
+        const connections = scanResult.Items || [];
+        const connectionCount = connections.length;
         console.log(`Current connection count: ${connectionCount}`);
 
-        // Send response to client
+        // Initialize API Gateway client to push messages
         const apiGateway = new ApiGatewayManagementApiClient({
           endpoint: `https://${domainName}/${stage}`,
         });
 
-        await apiGateway.send(
-          new PostToConnectionCommand({
-            ConnectionId: connectionId,
-            Data: JSON.stringify({
-              type: "COUNT",
-              count: connectionCount,
-            }),
-          })
-        );
+        // Broadcast the count to all active connections
+        const broadcast = connections.map(async (conn) => {
+          try {
+            await apiGateway.send(
+              new PostToConnectionCommand({
+                ConnectionId: conn.connectionId,
+                Data: JSON.stringify({
+                  type: "COUNT",
+                  count: connectionCount,
+                }),
+              })
+            );
+          } catch (err: any) {
+            // If connection is stale (gone), delete it
+            if (err.statusCode === 410) {
+              console.warn(`Removing stale connection: ${conn.connectionId}`);
+              await docClient.send(
+                new DeleteCommand({
+                  TableName: process.env.CONNECTIONS_TABLE_NAME!,
+                  Key: { connectionId: conn.connectionId },
+                })
+              );
+            } else {
+              console.error(
+                `Failed to send to ${conn.connectionId}:`,
+                err.message || err
+              );
+            }
+          }
+        });
+
+        await Promise.all(broadcast);
       }
     }
 

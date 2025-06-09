@@ -4,5 +4,5 @@ export const websocketHandlerSettings = {
   environment: {
     CONNECTIONS_TABLE_NAME: "websocket-connections",
   },
-  resourceGroupName: "websocket-stack",
+  resourceGroupName: "websocket-api-stack",
 };

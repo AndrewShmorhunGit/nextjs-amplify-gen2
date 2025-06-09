@@ -6,12 +6,18 @@ import { Header } from "../Header/Header";
 import { Sidebar } from "../Sidebar/Sidebar";
 import { cn } from "@/styles/utils";
 
-export function AppLayout({ children }: { children: React.ReactNode }) {
+export function AppLayout({
+  children,
+  websocketUrl,
+}: {
+  children: React.ReactNode;
+  websocketUrl: string;
+}) {
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false);
 
   return (
     <div className="flex h-screen flex-col bg-[var(--color-bg-main)]">
-      <Header />
+      <Header websocketUrl={websocketUrl} />
       <div className="flex flex-1 overflow-hidden">
         <Sidebar
           collapsed={sidebarCollapsed}
