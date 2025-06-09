@@ -21,13 +21,10 @@ export const CreateSeedButton = () => {
         const userMap = new Map<string, string>();
         for (const user of users) {
           const { data: existingUsers } = await client.models.User.list({
-            filter: {
-              email: { eq: user.email },
-            },
+            filter: { email: { eq: user.email } },
           });
 
           let userId: string;
-
           if (existingUsers.length > 0) {
             userId = existingUsers[0].id;
           } else {
@@ -43,13 +40,10 @@ export const CreateSeedButton = () => {
         const groupMap = new Map<string, string>();
         for (const group of groups) {
           const { data: existingGroups } = await client.models.Group.list({
-            filter: {
-              name: { eq: group.name },
-            },
+            filter: { name: { eq: group.name } }, // name == title
           });
 
           let groupId: string;
-
           if (existingGroups.length > 0) {
             groupId = existingGroups[0].id;
           } else {
@@ -75,18 +69,16 @@ export const CreateSeedButton = () => {
             },
           });
 
-          let createdOrder;
-
           if (existingOrders.length > 0) {
-            createdOrder = existingOrders[0];
-          } else {
-            const result = await client.models.Order.create({
-              title: order.title,
-              description: order.description,
-              userId,
-            });
-            createdOrder = result.data;
+            orderList.push(existingOrders[0]);
+            continue;
           }
+
+          const { data: createdOrder } = await client.models.Order.create({
+            title: order.title,
+            description: order.description,
+            userId,
+          });
 
           if (createdOrder) orderList.push(createdOrder);
         }
@@ -94,34 +86,38 @@ export const CreateSeedButton = () => {
         // === 4. PRODUCTS ===
         const productList = [];
         for (const product of products) {
-          const groupId = groupMap.get(product.groupName);
-          if (!groupId) continue;
+          let groupId = groupMap.get(product.groupName);
 
-          const { serialNumber, ...rest } = product;
+          if (!groupId) {
+            const { data: createdGroup } = await client.models.Group.create({
+              name: product.groupName,
+            });
+            if (!createdGroup) throw new Error("Group auto-creation failed");
+            groupId = createdGroup.id;
+            groupMap.set(product.groupName, groupId);
+          }
 
           const { data: existingProducts } = await client.models.Product.list({
-            filter: {
-              serialNumber: { eq: serialNumber },
-            },
+            filter: { title: { eq: product.title } },
           });
 
-          let createdProduct;
-
           if (existingProducts.length > 0) {
-            createdProduct = existingProducts[0];
-          } else {
-            const result = await client.models.Product.create({
-              ...rest,
-              serialNumber,
-              groupId,
-            });
-            createdProduct = result.data;
+            productList.push(existingProducts[0]);
+            continue;
           }
+
+          const { groupName, ...rest } = product;
+          console.log(groupName);
+
+          const { data: createdProduct } = await client.models.Product.create({
+            ...rest,
+            groupId,
+          });
 
           if (createdProduct) productList.push(createdProduct);
         }
 
-        // === 5. ORDER_PRODUCTS (добавляем только если связки ещё нет) ===
+        // === 5. ORDER_PRODUCTS ===
         for (let i = 0; i < productList.length; i++) {
           const product = productList[i];
           const order = orderList[i % orderList.length];
